@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+.container .start{
+    width: 100px;
+    height: 30px;
+    background-color: aquamarine;
+    border-radius: 10px;
+    border: 0;
+}
