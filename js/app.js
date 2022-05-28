@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
     let winners = $('#winners'),
+        namesCont = $('#names'),
+        checkNames = $('#checkNames'),
         title = $('#title'),
         time = 5000,
         i = 0,
@@ -16,8 +18,12 @@ $(document).ready(function () {
         ];
     //start comp
     $('#start').one('click', function () {
-        startTime();
-        title.text(' اسم ' + myArray[numWinners])
+        if (checkNames.val() == '') {
+            alert('select file first')
+        } else {
+            startTime();
+            title.text(' اسم ' + myArray[numWinners])
+        }
     });
 
 
@@ -39,6 +45,9 @@ $(document).ready(function () {
                 }
                 time = time - 50;
                 if (time == 0) {
+                    if (i > 0) {
+                        i = 0;
+                    }
                     for (let x = 0; x < names.length; x++) {
                         names[x].style.display = "none";
                     }
@@ -77,7 +86,38 @@ $(document).ready(function () {
         $(test).css('display', 'none');
     }
 
+    let selectedFile;
+    document.getElementById('input').addEventListener("change", (event) => {
+        selectedFile = event.target.files[0];
+    })
 
+    let data = [{
+        "name": "jayanth",
+        "data": "scd",
+        "abc": "sdef"
+    }]
 
-
+    document.getElementById('button').addEventListener("click", () => {
+        XLSX.utils.json_to_sheet(data, 'out.xlsx');
+        if (selectedFile) {
+            let fileReader = new FileReader();
+            fileReader.readAsBinaryString(selectedFile);
+            fileReader.onload = (event) => {
+                let data = event.target.result;
+                let workbook = XLSX.read(data, { type: "binary" });
+                // console.log(workbook);
+                workbook.SheetNames.forEach(sheet => {
+                    let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+                    createNames(rowObject);
+                });
+            }
+        }
+    });
+    function createNames(rowObject) {
+        for (let i = 0; i < rowObject.length; i++) {
+            $('<div class="information" id="info-' + i + '"  data-id=0><p class="name">' + rowObject[i].name + '</p><p class="phone">'
+                + rowObject[i].number + '</p>').appendTo(namesCont);
+        }
+        $(checkNames).val('names is insert')
+    }
 });

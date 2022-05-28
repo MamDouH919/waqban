@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/app.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+    
     <title>Waqban</title>
 </head>
 
@@ -17,11 +20,13 @@
             <div class="container-names">
                 <div class="container-btns">
                     <button class="start btn" id="start">بدء</button>
-                    <!-- <button class="add-names btn" id="add-names">Add more</button> -->
+                    <input type="file" id="input" accept="xls,xlsx"/>
+                    <button class="add-names btn" id="button">Add more</button>
                 </div>
                 <h2 class="title" id="title"></h2>
                 <div class="names" id="names">
-                    <div class="information" id="inf-0"  data-id=0>
+                    <input type="hidden" id="checkNames" value="">
+                    <!-- <div class="information" id="inf-0"  data-id=0>
                         <p class="name">تمتن تنتنت تنتنت نتن</p>
                         <p class="number">222222222</p>
                     </div>
@@ -48,7 +53,7 @@
                     <div class="information" id="inf-6"  data-id=0>
                         <p class="name">عهعه هخهخ عهعهعهعه نتن</p>
                         <p class="number">262626262626</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="container-winners">

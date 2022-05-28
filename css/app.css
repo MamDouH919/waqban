@@ -65,7 +65,7 @@ body::before {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 370px;
+    width: 500px;
     height: 100px;
     margin-bottom: 50px;
 }
