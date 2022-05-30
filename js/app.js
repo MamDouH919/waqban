@@ -3,11 +3,22 @@ $(document).ready(function () {
     let winners = $('#winners'),
         namesCont = $('#names'),
         checkNames = $('#checkNames'),
+        starterr = $('#start-err'),
+        uploaderr = $('#upload-err'),
+        doneerr = $('#done-err'),
+        fileInput = $('#file-input'),
         title = $('#title'),
+        popSet = $('#pop-set'),
+        numWin = $('#num-win'),
+        AwardsBg = $('#awards-bg'),
+        container = $('#container'),
         time = 5000,
         i = 0,
+        started = '',
+        uploaded = '',
         randomItem,
         numWinners = 0,
+        maxNumWinners,
         myArray = [
             "الفائز الأول",
             "الفائز الثاني",
@@ -15,14 +26,80 @@ $(document).ready(function () {
             "الفائز الرابع",
             "الفائز الخامس",
             "الفائز السادس",
-        ];
-    //start comp
-    $('#start').one('click', function () {
-        if (checkNames.val() == '') {
-            alert('select file first')
+            "الفائز السابع",
+            "الفائز الثامن",
+            "الفائز التاسع",
+            "الفائز العاشر",
+            "الفائز الحادي عشر",
+            "الفائز الثاني عشر",
+            "الفائز الثالث عشر",
+            "الفائز الرابع عشر",
+            "الفائز الخامس عشر",
+            "الفائز السادس عشر",
+            "الفائز السابع عشر",
+            "الفائز الثامن عشر",
+            "الفائز التاسع عشر",
+        ],
+        awardsArray = [];
+
+
+
+    $('#done').on('click', function () {
+        if (parseInt(numWin.val()) == 0) {
+            doneerr.css('display', 'block')
+            doneerr.text('يجب اختيار عدد الفائزين')
         } else {
-            startTime();
-            title.text(' اسم ' + myArray[numWinners])
+            popSet.css('display', 'none')
+            maxNumWinners = parseInt(numWin.val())
+            let awardsInput = $('#awards-bg input');
+            for (let i = awardsArray.length; i < awardsInput.length; i++) {
+                awardsArray.push($(awardsInput[i]).val())
+            }
+            console.log(awardsArray);
+        }
+    });
+
+    $('#setting-icon').on('click', function () {
+        popSet.css('display', 'flex')
+    });
+
+    $('#plus').on('click', function () {
+        let val = parseInt(numWin.val())
+        doneerr.css('display', 'none')
+        if (val != myArray.length) {
+            numWin.val(val + 1)
+            AwardsBg.append('<input type="text" class="awards" value="" placeholder="جائزة ' + myArray[val] + '"/>')
+        }
+        // container.css('opacity', '1')
+    });
+
+    $('#minus').on('click', function () {
+        let val = parseInt(numWin.val())
+        if (val != 0) {
+            numWin.val(val - 1)
+            AwardsBg.children("input:last").remove();
+        }
+    });
+
+
+
+    //start comp
+    $('#start').on('click', function () {
+        if (checkNames.val() == '') {
+            starterr.css('display', 'block')
+            starterr.text('يجب اضافة الأسماء اولا')
+        }
+        // else if (fileInput.val() == '') {
+        //     starterr.css('display', 'block')
+        //     starterr.text('يجب اختيار الملف اولا')
+        // }
+        else {
+            if (started == '') {
+                starterr.css('display', 'none')
+                startTime();
+                title.text(' اسم ' + myArray[numWinners])
+                started = 'done'
+            }
         }
     });
 
@@ -40,7 +117,6 @@ $(document).ready(function () {
                 names[i].style.display = "flex";
                 i++
                 if (i == names.length) {
-                    console.log('ok');
                     i = 0;
                 }
                 time = time - 50;
@@ -51,7 +127,6 @@ $(document).ready(function () {
                     for (let x = 0; x < names.length; x++) {
                         names[x].style.display = "none";
                     }
-                    console.log(names.length);
                     randomItem = names[Math.floor(Math.random() * names.length)];
                     randomItem.style.display = "flex";
                     showWinner();
@@ -64,7 +139,9 @@ $(document).ready(function () {
     function showWinner() {
         timeoutExample = setTimeout(function () {
             createWinnerContent()
-            if (numWinners == 4) {
+            if (numWinners == maxNumWinners - 1) {
+                title.text('انتهي السحب')
+
                 console.log('finish');
             }
             else {
@@ -78,8 +155,14 @@ $(document).ready(function () {
 
     function createWinnerContent() {
         let name = $(randomItem).find(".name");
-        let phone = $(randomItem).find(".number");
-        $('<div class="information"><p class="title-win">' + myArray[numWinners] + '</p><p class="name">' + name.text() + '</p><p class="phone">' + phone.text() + '</p>').appendTo(winners);
+        let phone = $(randomItem).find(".phone");
+        let awardTitle ='';
+        if (awardsArray[numWinners] != '') {
+            awardTitle = '<p class="award-title">' +awardsArray[numWinners]+ '</p>'
+        }
+        console.log(awardTitle);
+        $('<div class="information"><p class="title-win">'+ myArray[numWinners] +'</p>'+awardTitle+'<p class="name">'
+            + name.text() + '</p>').appendTo(winners);
         let id = $(randomItem).attr('id');
         let test = $('#' + id);
         $(test).attr('data-id', 1);
@@ -87,8 +170,14 @@ $(document).ready(function () {
     }
 
     let selectedFile;
-    document.getElementById('input').addEventListener("change", (event) => {
+    document.getElementById('file-input').addEventListener("change", (event) => {
         selectedFile = event.target.files[0];
+        // uploaded = '';
+        $('#file-name').text('لم يتم اختيار ملف')
+        if (fileInput.val() != '') {
+            $('#file-name').text(fileInput.val())
+            uploaderr.css('display', 'none')
+        }
     })
 
     let data = [{
@@ -97,19 +186,28 @@ $(document).ready(function () {
         "abc": "sdef"
     }]
 
-    document.getElementById('button').addEventListener("click", () => {
-        XLSX.utils.json_to_sheet(data, 'out.xlsx');
-        if (selectedFile) {
-            let fileReader = new FileReader();
-            fileReader.readAsBinaryString(selectedFile);
-            fileReader.onload = (event) => {
-                let data = event.target.result;
-                let workbook = XLSX.read(data, { type: "binary" });
-                // console.log(workbook);
-                workbook.SheetNames.forEach(sheet => {
-                    let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
-                    createNames(rowObject);
-                });
+    $('#button').on("click", () => {
+        if (fileInput.val() == '') {
+            uploaderr.css('display', 'block')
+            uploaderr.text('يجب اختيار الملف اولا')
+        } else {
+            // if (uploaded == '') {
+            //     uploaded = 'done'
+            $('#start').css('display', 'flex')
+            XLSX.utils.json_to_sheet(data, 'out.xlsx');
+            if (selectedFile) {
+                let fileReader = new FileReader();
+                fileReader.readAsBinaryString(selectedFile);
+                fileReader.onload = (event) => {
+                    let data = event.target.result;
+                    let workbook = XLSX.read(data, { type: "binary" });
+                    // console.log(workbook);
+                    workbook.SheetNames.forEach(sheet => {
+                        let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
+                        createNames(rowObject);
+                    });
+                }
+                // }
             }
         }
     });

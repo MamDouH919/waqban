@@ -5,24 +5,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/all.min.css">
     <link rel="stylesheet" href="./css/app.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
-    
+
     <title>Waqban</title>
 </head>
 
 <body>
-    <div class="bg-body"></div>
-    <div class="container">
+    <div class="setting-container-bg" id="pop-set">
+        <div class="container-btns">
+            <div class="upload-btn">
+                <div class="file-input">
+                    <input type="file" name="file-input"
+                        accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        id="file-input" class="file-input__input" />
+                    <label class="file-input__label" for="file-input">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload"
+                            class="svg-inline--fa fa-upload fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path fill="currentColor"
+                                d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z">
+                            </path>
+                        </svg>
+                        <span>تحميل الملف</span></label>
+                </div>
+                <button class="add-names btn" id="button">أضافة الاسماء للسحب</button>
+            </div>
+            <span class="file-name" id="file-name">لم يتم اختيار ملف</span>
+            <span class="err" id="upload-err"></span>
+            <div class="num-win-bg">
+                <div class="num-win-title">اختر عدد الفائزين</div>
+                <span class="num-win  minus" id="minus"><i class="fa-solid fa-minus"></i></span>
+                <input type="text" class="num-win num-win-number" id="num-win" value='0' READONLY />
+                <span class="num-win plus" id="plus"><i class="fa-solid fa-plus"></i></span>
+                <div class="awards-bg" id="awards-bg">
+                    <!-- <input type="text" class="num-win" id="num-win"> -->
+                </div>
+            </div>
+            <span class="err" id="done-err"></span>
+            <div class="bg-done">
+                <button class="done" id="done">تم</button>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="container">
+        <p class="setting-icon" id="setting-icon"><i class="fa-solid fa-sliders"></i>
+        </p>
         <div class="container-content">
             <div class="container-names">
-                <div class="container-btns">
-                    <button class="start btn" id="start">بدء</button>
-                    <input type="file" id="input" accept="xls,xlsx"/>
-                    <button class="add-names btn" id="button">Add more</button>
-                </div>
+                <button class="start btn" id="start">بدء عملية سحب الاسماء</button>
+                <span class="err" id="start-err"></span>
                 <h2 class="title" id="title"></h2>
                 <div class="names" id="names">
                     <input type="hidden" id="checkNames" value="">
@@ -67,7 +103,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </body>
 <script src="./js/app.js"></script>
