@@ -8,7 +8,7 @@
 
 body {
     position: relative;
-    /* height: 100vh; */
+    height: 100vh;
     /* width: 100vw; */
     padding: 20px;
     display: flex;
@@ -19,6 +19,7 @@ body {
     background-size: cover;
     background-position: center;
     /* background-size: auto; */
+
 }
 
 body::before {
@@ -47,13 +48,13 @@ body::before {
 /* style to all */
 .title {
     color: #fff;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     text-transform: capitalize;
     font-size: 40px;
 }
 
-p {
-    font-size: 28px;
+.p {
+    font-size: 25;
 }
 
 .btn {
@@ -131,6 +132,9 @@ p {
 .container-btns .upload-btn {
     display: flex;
     margin-bottom: 10px;
+}
+.container-btns .upload-btn .add-names {
+    display: none;
 }
 
 .file-input__input {
@@ -310,7 +314,7 @@ p {
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    /* height: 100vh; */
     position: relative;
     /* top: 50%;
     left: 50%;
@@ -333,7 +337,6 @@ p {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100vh;
 }
 
 .container-btns .file-name {
@@ -358,7 +361,7 @@ p {
 
 .container .container-names .names {
     color: aliceblue;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -377,7 +380,7 @@ p {
     width: 100%;
     align-items: center;
     justify-content: center;
-    font-size: 35px;
+    font-size: 30px;
     color: rgb(163, 103, 42);
 }
 
@@ -386,12 +389,35 @@ p {
     flex-direction: column;
     align-items: center;
     width: 400px;
-    height: -webkit-fill-available;
+    height: 650px;
+    overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
     margin-left: 100px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border: 25px solid #B88846;
     border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E") 25;
+}
+
+.container .container-winners::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.container .container-winners::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+
+}
+
+/* Handle */
+.container .container-winners::-webkit-scrollbar-thumb {
+    background: #B88846;
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+.container .container-winners::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .container .container-winners .winners {
@@ -412,7 +438,7 @@ p {
 }
 
 .container .container-winners .winners .information .title-win {
-    padding: 10px 20px;
+    padding: 6px 17px;
     margin-bottom: 5px;
     text-align: center;
     text-transform: uppercase;
@@ -428,4 +454,13 @@ p {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+}
+
+.container .container-winners .winners .information .award-title {
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819 51%, #FF512F 100%);
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    border-radius: 15px;
+    direction: rtl;
 }

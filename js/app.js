@@ -45,22 +45,27 @@ $(document).ready(function () {
 
 
     $('#done').on('click', function () {
-        if (parseInt(numWin.val()) == 0) {
+        if (fileInput.val() == '') {
+            doneerr.css('display', 'block')
+            doneerr.text('يجب اختيار الملف اولا')
+        }
+        else if (parseInt(numWin.val()) == 0) {
             doneerr.css('display', 'block')
             doneerr.text('يجب اختيار عدد الفائزين')
-        } else {
+        }
+        else {
             popSet.css('display', 'none')
             maxNumWinners = parseInt(numWin.val())
             let awardsInput = $('#awards-bg input');
             for (let i = awardsArray.length; i < awardsInput.length; i++) {
                 awardsArray.push($(awardsInput[i]).val())
             }
-            console.log(awardsArray);
         }
     });
 
     $('#setting-icon').on('click', function () {
         popSet.css('display', 'flex')
+        awardsArray = []
     });
 
     $('#plus').on('click', function () {
@@ -68,9 +73,16 @@ $(document).ready(function () {
         doneerr.css('display', 'none')
         if (val != myArray.length) {
             numWin.val(val + 1)
-            AwardsBg.append('<input type="text" class="awards" value="" placeholder="جائزة ' + myArray[val] + '"/>')
+            AwardsBg.append('<input type="text" class="awards" id="award-' + val + '" value="" placeholder="جائزة ' + myArray[val] + '"/>')
+            // $(".awards").focusout(function () {
+            //     console.log('jjj');
+            //     let text = $(this).val();
+            //     if (!/^\s*$/.test(text)) {
+            //         $(this).remove();
+            //         AwardsBg.append('<div class="text-bg"><span>' + text + '</span></div>')
+            //     }
+            // });
         }
-        // container.css('opacity', '1')
     });
 
     $('#minus').on('click', function () {
@@ -80,6 +92,7 @@ $(document).ready(function () {
             AwardsBg.children("input:last").remove();
         }
     });
+
 
 
 
@@ -95,10 +108,12 @@ $(document).ready(function () {
         // }
         else {
             if (started == '') {
+                namesCont.fadeIn();
                 starterr.css('display', 'none')
                 startTime();
                 title.text(' اسم ' + myArray[numWinners])
-                started = 'done'
+                started = 'done';
+                $('#start').fadeOut();
             }
         }
     });
@@ -140,9 +155,8 @@ $(document).ready(function () {
         timeoutExample = setTimeout(function () {
             createWinnerContent()
             if (numWinners == maxNumWinners - 1) {
+                namesCont.fadeOut();
                 title.text('انتهي السحب')
-
-                console.log('finish');
             }
             else {
                 time = 5000;
@@ -156,12 +170,11 @@ $(document).ready(function () {
     function createWinnerContent() {
         let name = $(randomItem).find(".name");
         let phone = $(randomItem).find(".phone");
-        let awardTitle ='';
-        if (awardsArray[numWinners] != '') {
-            awardTitle = '<p class="award-title">' +awardsArray[numWinners]+ '</p>'
+        let awardTitle = '';
+        if (!/^\s*$/.test(awardsArray[numWinners])) {
+            awardTitle = '<p class="p award-title">جائزة الفائز : ' + awardsArray[numWinners] + '</p>'
         }
-        console.log(awardTitle);
-        $('<div class="information"><p class="title-win">'+ myArray[numWinners] +'</p>'+awardTitle+'<p class="name">'
+        $('<div class="information"><p class="p title-win">' + myArray[numWinners] + '</p>' + awardTitle + '<p class="p name">'
             + name.text() + '</p>').appendTo(winners);
         let id = $(randomItem).attr('id');
         let test = $('#' + id);
@@ -177,6 +190,7 @@ $(document).ready(function () {
         if (fileInput.val() != '') {
             $('#file-name').text(fileInput.val())
             uploaderr.css('display', 'none')
+            $('#button').fadeIn()
         }
     })
 
@@ -201,7 +215,6 @@ $(document).ready(function () {
                 fileReader.onload = (event) => {
                     let data = event.target.result;
                     let workbook = XLSX.read(data, { type: "binary" });
-                    // console.log(workbook);
                     workbook.SheetNames.forEach(sheet => {
                         let rowObject = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheet]);
                         createNames(rowObject);
@@ -209,6 +222,9 @@ $(document).ready(function () {
                 }
                 // }
             }
+            $('#upload-btn').fadeOut();
+            $('#file-name').text('تم تحميل الملف')
+            $('#file-name').css('background-color', '#1a880b')
         }
     });
     function createNames(rowObject) {
