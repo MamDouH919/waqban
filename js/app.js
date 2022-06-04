@@ -15,7 +15,6 @@ $(document).ready(function () {
         time = 5000,
         i = 0,
         started = '',
-        uploaded = '',
         randomItem,
         numWinners = 0,
         maxNumWinners,
@@ -74,14 +73,6 @@ $(document).ready(function () {
         if (val != myArray.length) {
             numWin.val(val + 1)
             AwardsBg.append('<input type="text" class="awards" id="award-' + val + '" value="" placeholder="جائزة ' + myArray[val] + '"/>')
-            // $(".awards").focusout(function () {
-            //     console.log('jjj');
-            //     let text = $(this).val();
-            //     if (!/^\s*$/.test(text)) {
-            //         $(this).remove();
-            //         AwardsBg.append('<div class="text-bg"><span>' + text + '</span></div>')
-            //     }
-            // });
         }
     });
 
@@ -94,30 +85,23 @@ $(document).ready(function () {
     });
 
 
-
-
     //start comp
     $('#start').on('click', function () {
         if (checkNames.val() == '') {
             starterr.css('display', 'block')
             starterr.text('يجب اضافة الأسماء اولا')
         }
-        // else if (fileInput.val() == '') {
-        //     starterr.css('display', 'block')
-        //     starterr.text('يجب اختيار الملف اولا')
-        // }
         else {
             if (started == '') {
                 namesCont.fadeIn();
                 starterr.css('display', 'none')
-                startTime();
                 title.text(' اسم ' + myArray[numWinners])
                 started = 'done';
                 $('#start').fadeOut();
+                startTime();
             }
         }
     });
-
 
     function startTime() {
         let names = $('#names .information[data-id = 0]');
@@ -152,17 +136,27 @@ $(document).ready(function () {
     }
 
     function showWinner() {
+        // let again;
         timeoutExample = setTimeout(function () {
             createWinnerContent()
             if (numWinners == maxNumWinners - 1) {
                 namesCont.fadeOut();
+                $('#again').fadeOut();
                 title.text('انتهي السحب')
             }
             else {
+                $('#again').text('');
+                $('#again').append(' <i style="-webkit-transform: scaleX(-1);transform: scaleX(-1);" class="fa-solid fa-caret-right"></i> اسم ' + myArray[numWinners + 1])
+                $('#again').fadeIn();
+                title.fadeOut();
                 time = 5000;
                 numWinners++;
-                title.text(' اسم ' + myArray[numWinners])
-                startTime();
+                $('#again').one('click', function () {
+                    $('#again').fadeOut();
+                    title.fadeIn();
+                    title.text(' اسم ' + myArray[numWinners])
+                    startTime();
+                });
             }
         }, 2000);
     }
@@ -175,7 +169,7 @@ $(document).ready(function () {
             awardTitle = '<p class="p award-title">جائزة الفائز : ' + awardsArray[numWinners] + '</p>'
         }
         $('<div class="information"><p class="p title-win">' + myArray[numWinners] + '</p>' + awardTitle + '<p class="p name">'
-            + name.text() + '</p>').appendTo(winners);
+            + name.text() + '</p><p class="p phone">' + phone.text() + '</p>').appendTo(winners);
         let id = $(randomItem).attr('id');
         let test = $('#' + id);
         $(test).attr('data-id', 1);
@@ -185,7 +179,6 @@ $(document).ready(function () {
     let selectedFile;
     document.getElementById('file-input').addEventListener("change", (event) => {
         selectedFile = event.target.files[0];
-        // uploaded = '';
         $('#file-name').text('لم يتم اختيار ملف')
         if (fileInput.val() != '') {
             $('#file-name').text(fileInput.val())
@@ -205,8 +198,6 @@ $(document).ready(function () {
             uploaderr.css('display', 'block')
             uploaderr.text('يجب اختيار الملف اولا')
         } else {
-            // if (uploaded == '') {
-            //     uploaded = 'done'
             $('#start').css('display', 'flex')
             XLSX.utils.json_to_sheet(data, 'out.xlsx');
             if (selectedFile) {

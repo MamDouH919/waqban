@@ -309,6 +309,10 @@ body::before {
 .start {
     margin-bottom: 20px;
 }
+.again {
+    display: none;
+    margin-bottom: 20px;
+}
 
 .container {
     width: 100%;
