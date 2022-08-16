@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    <!-- setting container -->
     <div class="setting-container-bg" id="pop-set">
         <div class="container-btns">
             <div class="upload-btn" id="upload-btn">
@@ -46,61 +47,37 @@
                     <!-- <input type="text" class="num-win" id="num-win"> -->
                 </div>
             </div>
+            <div class="bg-shuffleTime">
+                <input type="text" maxlength="2" inputmode="numeric" id="shuffle-time" placeholder="1-60">
+                <label for="shuffle-time">اختر وقت سحب الاسم</label>
+            </div>
+            <span class="err" id="time-err"></span>
+
             <span class="err" id="done-err"></span>
             <div class="bg-done">
                 <button class="done" id="done">تم</button>
             </div>
         </div>
     </div>
+    <!-- end setting container -->
+    <!--  -->
     <div class="container" id="container">
         <p class="setting-icon" id="setting-icon"><i class="fa-solid fa-sliders"></i>
         </p>
         <div class="container-content">
             <div class="container-names">
+                <div class="time-countdown" id="time-countdown"></div>
                 <button class="start btn" id="start">بدء عملية سحب الاسماء</button>
-                <button class="again btn" id="again">scs</button>
+                <button class="again btn" id="again"></button>
                 <span class="err" id="start-err"></span>
                 <h2 class="title" id="title"></h2>
                 <div class="names" id="names">
                     <input type="hidden" id="checkNames" value="">
-                    <!-- <div class="information" id="inf-0"  data-id=0>
-                        <p class="name">تمتن تنتنت تنتنت نتن</p>
-                        <p class="number">222222222</p>
-                    </div>
-                    <div class="information" id="inf-1"  data-id=0>
-                        <p class="name">ضصضص تضصضص ضصضص ضص</p>
-                        <p class="number">111111111</p>
-                    </div>
-                    <div class="information" id="inf-2"  data-id=0>
-                        <p class="name">شسشسشح شسشسشس شسشسشس نشستن</p>
-                        <p class="number">89899898989</p>
-                    </div>
-                    <div class="information" id="inf-3"  data-id=0>
-                        <p class="name">جدجدج حجج جحجحج نتن</p>
-                        <p class="number">4554455445</p>
-                    </div>
-                    <div class="information" id="inf-4"  data-id=0>
-                        <p class="name">عهعه هخهخ عهعهعهعه نتن</p>
-                        <p class="number">262626262626</p>
-                    </div>
-                    <div class="information" id="inf-5"  data-id=0>
-                        <p class="name">عهعه هخهخ عهعهعهعه نتن</p>
-                        <p class="number">262626262626</p>
-                    </div>
-                    <div class="information" id="inf-6"  data-id=0>
-                        <p class="name">عهعه هخهخ عهعهعهعه نتن</p>
-                        <p class="number">262626262626</p>
-                    </div> -->
                 </div>
             </div>
             <div class="container-winners">
                 <h2 class="title">الفائزون</h2>
                 <div class="winners" id="winners">
-                    <!-- <div class="information" id="inf-4"  data-id=0>
-                        <p class="title-win">الفائز الأول</p>
-                        <p class="name">عهعه هخهخ عهعهعهعه نتن</p>
-                        <p class="number">262626262626</p>
-                    </div> -->
                 </div>
             </div>
         </div>
